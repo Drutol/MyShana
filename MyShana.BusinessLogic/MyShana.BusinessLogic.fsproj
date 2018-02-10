@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <Compile Include="ApiCommunicator.fs" />
+    <Compile Include="JikanCommunicator.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.6.16" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyShana.Interfaces\MyShana.Interfaces.fsproj" />
+    <ProjectReference Include="..\MyShana.Models\MyShana.Models.fsproj" />
+  </ItemGroup>
+
+</Project>
