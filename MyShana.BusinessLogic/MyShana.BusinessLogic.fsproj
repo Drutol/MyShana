@@ -6,7 +6,7 @@
 
 
   <ItemGroup>
-    <Compile Include="ApiCommunicator.fs" />
+    <Compile Include="ShanaCommunicator.fs" />
     <Compile Include="JikanCommunicator.fs" />
   </ItemGroup>
 
