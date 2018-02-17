@@ -150,6 +150,10 @@
       <Project>{efd9fc5f-5938-4960-8cb6-3b94cb9bff11}</Project>
       <Name>MyShana.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyShana.ViewModels\MyShana.ViewModels.fsproj">
+      <Project>{e3eb26aa-96f5-454c-aebf-8782e7e2ff8b}</Project>
+      <Name>MyShana.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

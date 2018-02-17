@@ -18,12 +18,14 @@ module ShanaCommunicator =
             try
                 if httpClient = null 
                 then
-                    httpClient <- new HttpClient(new HttpClientHandler(UseCookies = true, AllowAutoRedirect = false),
-                                                BaseAddress = new Uri("shanaproject.com"))
-                    let! response = httpClient.GetStringAsync("/login") |> Async.AwaitTask
+                    httpClient <- new HttpClient(new HttpClientHandler(UseCookies = true, 
+                                                                       AllowAutoRedirect = true),
+                                                     BaseAddress=new Uri("http://www.shanaproject.com/"))
+                    let! response = httpClient.GetAsync("/login") |> Async.AwaitTask
+                    let! html = response.Content.ReadAsStringAsync() |> Async.AwaitTask
 
                     let doc = new HtmlDocument()
-                    doc.LoadHtml(response)
+                    doc.LoadHtml(html)
 
                     let csrfToken = doc.DocumentNode.Descendants("input") 
                                     |> Seq.filter (fun node -> 
@@ -40,12 +42,11 @@ module ShanaCommunicator =
                     let! response = httpClient.PostAsync("/login", new FormUrlEncodedContent(contents)) 
                                     |> Async.AwaitTask
 
-                    if response.IsSuccessStatusCode
-                    then logInfo("Successfuly logged in.")
-                    else
-                        logError("Login fail.")
-                        httpClient <- null
-                        raise (Exception("Login fail"))
+                    match response.IsSuccessStatusCode with
+                    | true -> logInfo("Successfuly logged in.")
+                    | false -> logError("Login fail.")
+                               httpClient <- null
+                               raise (Exception("Login fail"))
             with 
             | exn ->
                 logError("Login exception")
@@ -57,15 +58,15 @@ module ShanaCommunicator =
 
         
 
-    let GetRecentEntriesAsync
-        (logInfo:LogInfo)
-        (logError:LogError)
-        (httpClient:HttpClient)
-        (page:int)=
+    let AsyncGetRecentEntries
+        logInfo
+        logError
+        (page:int) : Async<Option<seq<SeriesEntry>>> =
             async {
 
                 try
-                    let uri = new Uri(String.Format("http://www.shanaproject.com/anime/{0}",[page]))
+                    let! httpClient = AyncGetApiHttpContext logInfo logError "" ""
+                    let uri = new Uri(String.Format("http://www.shanaproject.com/anime/{0}",page))
                     let! html = httpClient.GetStringAsync(uri) |> Async.AwaitTask
 
                     let doc = new HtmlDocument()

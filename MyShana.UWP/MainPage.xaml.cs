@@ -23,12 +23,12 @@ namespace MyShana.UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private RecentReleasesPageViewModel _viewModel;
+        private RecentReleasesViewModel _viewModel;
 
         public MainPage()
         {
             this.InitializeComponent();
-            DataContext = _viewModel = new RecentReleasesPageViewModel();
+            DataContext = _viewModel = new RecentReleasesViewModel();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

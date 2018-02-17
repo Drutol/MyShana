@@ -11,7 +11,6 @@ type AsyncGetRecentEntries = unit -> Async<Option<SeriesEntry>>
 
 //Jikan
 type AsyncGetAnimeInfo = string -> Async<Option<AnimeDetails>>
-type AsyncAnimeInfo = string -> Async<AnimeDetails>
 
 //Logger
 type LogInfo = string -> unit
